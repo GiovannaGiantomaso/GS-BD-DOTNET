@@ -1,0 +1,7 @@
+# Pastas do Visual Studio
+.vs/
+*.vscode/
+
+# Diretórios de compilação
+bin/
+obj/
