@@ -49,6 +49,7 @@ namespace GlobalSolution.Controllers
             return Ok(result);
         }
 
+
         // PUT: api/Usuario/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUsuario(int id, UsuarioEnergia usuario)

@@ -26,15 +26,20 @@ namespace GlobalSolution.Services
                 command.Parameters.Add("p_id_usuario", OracleDbType.Int32).Value = idUsuario;
                 command.Parameters.Add("p_consumo_kwh", OracleDbType.Decimal).Value = consumoKwh;
 
+                // Parâmetro OUT para a mensagem de retorno
+                var mensagemParam = new OracleParameter("p_mensagem", OracleDbType.Varchar2, 255)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(mensagemParam);
+
                 try
                 {
                     await connection.OpenAsync();
                     await command.ExecuteNonQueryAsync();
-                    return "Consumo inserido com sucesso.";
-                }
-                catch (OracleException ex) when (ex.Number == 1403) // 1403: Código para NO_DATA_FOUND
-                {
-                    return $"Erro: ID de usuário '{idUsuario}' não encontrado.";
+
+                    // Retorna a mensagem recebida pelo parâmetro OUT
+                    return mensagemParam.Value.ToString();
                 }
                 catch (Exception ex)
                 {

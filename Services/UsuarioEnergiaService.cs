@@ -27,15 +27,20 @@ namespace GlobalSolution.Services
                 command.Parameters.Add("p_email", OracleDbType.Varchar2).Value = email;
                 command.Parameters.Add("p_senha", OracleDbType.Varchar2).Value = senha;
 
+                // Parâmetro de saída para a mensagem de retorno
+                var mensagemParam = new OracleParameter("p_mensagem", OracleDbType.Varchar2, 4000)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(mensagemParam);
+
                 try
                 {
                     await connection.OpenAsync();
                     await command.ExecuteNonQueryAsync();
-                    return "Usuário inserido com sucesso.";
-                }
-                catch (OracleException ex) when (ex.Number == 1)
-                {
-                    return $"Erro: O email '{email}' já está cadastrado.";
+
+                    // Retorna a mensagem recebida da procedure
+                    return mensagemParam.Value.ToString();
                 }
                 catch (Exception ex)
                 {
@@ -43,6 +48,7 @@ namespace GlobalSolution.Services
                 }
             }
         }
+
 
         // Método para chamar a procedure de inserir um novo consumo
         public async Task<string> InserirConsumoAsync(int idUsuario, decimal consumoKwh)
