@@ -23,8 +23,8 @@ namespace GlobalSolution.Models
         [Column("SENHA")]
         public string Senha { get; set; }
 
-        public ICollection<ConsumoEnergia> Consumos { get; set; }
-        public ICollection<HistoricoConsumo> HistoricosConsumo { get; set; }
-        public ICollection<FeedbackConsumo> FeedbacksConsumo { get; set; }
+        public virtual ICollection<ConsumoEnergia>? Consumos { get; set; }
+        public virtual ICollection<HistoricoConsumo>? HistoricosConsumo { get; set; }
+        public virtual ICollection<FeedbackConsumo>? FeedbacksConsumo { get; set; }
     }
 }

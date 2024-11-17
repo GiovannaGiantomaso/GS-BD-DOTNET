@@ -41,19 +41,26 @@ namespace GlobalSolution.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUsuario([FromBody] UsuarioEnergia usuario)
         {
+            // Validação mínima de entrada
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _usuarioService.InserirUsuarioAsync(usuario.Nome, usuario.Email, usuario.Senha);
             if (result.StartsWith("Erro"))
             {
                 return BadRequest(result);
             }
+
             return Ok(result);
         }
 
         // PUT: api/Usuario/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUsuario(int id, [FromBody] UsuarioEnergia usuario)
+        public async Task<IActionResult> UpdateUsuario(int id, UsuarioEnergia usuario)
         {
-            if (id != usuario.IdUsuario) return BadRequest("ID de usuário inconsistente.");
+            if (id != usuario.IdUsuario) return BadRequest();
             await _repository.UpdateUsuarioAsync(usuario);
             return NoContent();
         }
