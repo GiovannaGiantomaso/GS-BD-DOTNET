@@ -19,14 +19,19 @@ namespace GlobalSolution.Repositories.Implementations
         public async Task<IEnumerable<UsuarioEnergia>> GetAllUsuariosAsync()
         {
             return await _context.Usuarios
-                .Include(u => u.Consumos) 
+                .Include(u => u.Consumos)
+                .Include(u => u.HistoricosConsumo)
+                .Include(u => u.FeedbacksConsumo)
                 .ToListAsync();
         }
+
 
         public async Task<UsuarioEnergia> GetUsuarioByIdAsync(int id)
         {
             return await _context.Usuarios
-                .Include(u => u.Consumos) 
+                .Include(u => u.Consumos)
+                .Include(u => u.HistoricosConsumo)
+                .Include(u => u.FeedbacksConsumo)
                 .FirstOrDefaultAsync(u => u.IdUsuario == id);
         }
 

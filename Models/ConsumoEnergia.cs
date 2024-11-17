@@ -1,7 +1,5 @@
-﻿using GlobalSolution.Models;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace GlobalSolution.Models
 {
@@ -16,15 +14,11 @@ namespace GlobalSolution.Models
         [Column("ID_USUARIO")]
         public int IdUsuario { get; set; }
 
-        [Column("DATA_REGISTRO", TypeName = "DATE")]
-        public DateTime DataRegistro { get; set; } = DateTime.Now;
+        [Column("DATA_REGISTRO")]
+        public DateTime DataRegistro { get; set; }
 
-        [Column("CONSUMO_KWH", TypeName = "NUMBER(10,2)")]
+        [Required]
+        [Column("CONSUMO_KWH", TypeName = "NUMBER(10, 2)")]
         public decimal ConsumoKwh { get; set; }
-
-        [ForeignKey("IdUsuario")]
-        [JsonIgnore]
-        public UsuarioEnergia? Usuario { get; set; }
-
     }
 }

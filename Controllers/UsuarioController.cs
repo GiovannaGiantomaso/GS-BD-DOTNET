@@ -49,12 +49,11 @@ namespace GlobalSolution.Controllers
             return Ok(result);
         }
 
-
         // PUT: api/Usuario/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUsuario(int id, UsuarioEnergia usuario)
+        public async Task<IActionResult> UpdateUsuario(int id, [FromBody] UsuarioEnergia usuario)
         {
-            if (id != usuario.IdUsuario) return BadRequest();
+            if (id != usuario.IdUsuario) return BadRequest("ID de usuário inconsistente.");
             await _repository.UpdateUsuarioAsync(usuario);
             return NoContent();
         }
